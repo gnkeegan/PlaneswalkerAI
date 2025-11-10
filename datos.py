@@ -1,5 +1,14 @@
+# =============================================================
+# Nombre del archivo: datos.py
+# Autor: Grant Nathaniel Keegan
+# Fecha de creación: 2025-10-15
+# Descripción: ETL para obtener las cartas en formato standard.
+# Dependencias: requests, pandas, tqdm, time
+# =============================================================
+
+# Instalamos dependencias.
 import requests
-import pandas as pd
+import pandas as pd # Para trabajar y manipular los archivos csv.
 from tqdm import tqdm
 import time
 
@@ -12,22 +21,26 @@ def get_standard_cards():
 
     # Endpoint base
     base_url = "https://api.scryfall.com/cards/search"
+    # Este query se asegura que las cartas sean legales en formato standard de acuerdo a la base de datos.
+    # Utiliza la variable legal:standard. Esta es actualizada automáticamente en Scryfall.
     query = "game:paper legal:standard -is:promo -is:digital"
 
-    all_cards = []
+    # Agrega cada carta a una lista.
+    all_cards = [] 
     next_page = f"{base_url}?q={query}"
 
     while next_page:
         response = requests.get(next_page)
         if response.status_code != 200:
-            print(f"⚠️ Error {response.status_code}: {response.text}")
+            print(f"Error {response.status_code}: {response.text}")
             break
 
         data = response.json()
         cards = data.get("data", [])
 
         for card in tqdm(cards, desc="Procesando cartas"):
-            # Algunas cartas no tienen texto ni stats, filtramos
+            # Agregamos solamente columnas relevantes, ya que muchas solo estorban.
+            # En especial necesitamos "colors" y "image_uri" para descargarlas.
             card_info = {
                 "name": card.get("name"),
                 "type_line": card.get("type_line"),
@@ -48,15 +61,14 @@ def get_standard_cards():
         next_page = data.get("next_page")
         time.sleep(0.1)  # para no saturar la API
 
-    print(f"✅ Total de cartas descargadas: {len(all_cards)}")
+    print(f"Total de cartas descargadas: {len(all_cards)}")
 
-    # Crear dataframe y guardar CSV
+    # Crear dataframe y guardar CSV como "mtg_standard_cards.csv"
     df = pd.DataFrame(all_cards)
     df.to_csv("mtg_standard_cards.csv", index=False, encoding="utf-8-sig")
-    print("💾 Archivo guardado como mtg_standard_cards.csv")
+    print("Archivo guardado como mtg_standard_cards.csv")
 
     return df
-
 
 if __name__ == "__main__":
     df = get_standard_cards()
