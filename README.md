@@ -23,19 +23,19 @@ José Antonio Cantoral Ceballos | Eduardo Daniel Juárez Pineda
 Ismael Solís Moreno
 
 <p align="center">
-  <img src="images/banner.png" width="100%" alt="Portada del proyecto">
+  <img src="images/Banner.png" width="100%" alt="Portada del proyecto">
 </p>
 
 ## Introducción
 
 
-En mi evidencia para los módulos 2 y 3 de Inteligencia artificial avanzada para la ciencia de datos II, voy a implementar una red neuronal convolucional (CNN) para detectar con un alto grado de confianza todas las cartas en formato standard actuales del juego "Magic: The Gathering"
+En mi evidencia para los módulos 2 y 3 de Inteligencia artificial avanzada para la ciencia de datos II, voy a implementar una red neuronal convolucional (CNN) para detectar con un alto grado de confianza todas las cartas en formato standard actuales del juego "Magic: The Gathering".
 
 
 
 ## Cómo correr el código - Preprocesamiento de Datos
 
-
+Todos los códigos para descargar los datos y generar los metadatos, se deben de correr en una terminal. Estos incluyen: ***descargar_datos_csv.py*** para descargar el csv con los datos de todas las cartas standard. ***img_download.py*** para descargar las imágenes en la carpeta de elección, y ***metadata_generator.py*** para generar el csv con metadatos a partir del csv generado anteriormente.
 
 El código tiene varias dependencias, de no tenerlas, debes introducir en la terminal de comandos:
 
@@ -43,13 +43,11 @@ pip install numpy
 
 pip install pandas
 
-pip install matplotlib
+pip install tqdm
 
-pip install scikit-learn
+pip install time
 
-pip install seaborn
-
-pip install xgboost
+pip install tkinter
 
 
 
