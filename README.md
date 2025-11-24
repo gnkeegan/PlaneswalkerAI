@@ -23,7 +23,7 @@ José Antonio Cantoral Ceballos | Eduardo Daniel Juárez Pineda
 Ismael Solís Moreno
 
 <p align="center">
-  <img src="Banner.png" width="100%" alt="Portada del proyecto">
+  <img src="Banner.jpg" width="100%" alt="Portada del proyecto">
 </p>
 
 ## Introducción
