@@ -1,13 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# === 1. Cargar CSV ===
+# Cargar dataset de metadatos.
 df = pd.read_csv("card_metadata.csv")
 
-# === 2. Columnas ===
+# Columnas
 color_cols = ["Colorless", "R", "U", "G", "B", "W"]
 
-# === 3. Normalizar combinaciones (orden fijo R U G B W) ===
+# Establecer orden de colores.
 ORDER = ["R", "U", "G", "B", "W"]
 
 def normalized_combination(row):
@@ -19,10 +19,10 @@ def normalized_combination(row):
 
 df["comb"] = df.apply(normalized_combination, axis=1)
 
-# === 4. Contar ===
+# Contar las cartas.
 counts = df["comb"].value_counts()
 
-# Ordenar por tamaño de combinación
+# Ordenar por tamaño.
 def sort_key(x):
     if x == "Colorless":
         return (0, x)
@@ -30,7 +30,7 @@ def sort_key(x):
 
 counts = counts.sort_index(key=lambda x: x.map(sort_key))
 
-# === 5. Colores para barras ===
+# Colores para visualización.
 bar_colors = []
 special_colors = {
     "Colorless": "#A8A8A8",
@@ -44,7 +44,7 @@ special_colors = {
 for name in counts.index:
     bar_colors.append(special_colors.get(name, "#87CEEB"))
 
-# === 6. Graficar con etiquetas ===
+# Graficar con etiquetas.
 plt.figure(figsize=(18, 8))
 bars = plt.bar(counts.index, counts.values, color=bar_colors, edgecolor="black")
 
@@ -62,6 +62,6 @@ plt.xticks(rotation=90, fontsize=10)
 plt.tight_layout()
 plt.show()
 
-# === 7. Mostrar conteos ===
+# Mostrar conteos en la consola.
 print("\n=== Cantidades por combinación normalizada ===\n")
 print(counts)
